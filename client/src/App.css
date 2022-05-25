@@ -1,0 +1,412 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Ubuntu', sans-serif;
+}
+
+.app {
+  background-color: #2e3351;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  gap: 20px;
+  padding-bottom: 100px;
+}
+
+button {
+  border: none;
+}
+
+.navbar {
+  width: 100%;
+  background-color: #404876;
+  display: flex;
+  justify-content: center;
+}
+
+.nav-content {
+  padding: 20px 40px;
+  width: 1280px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-content p {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.logo-image {
+  width: 60px;
+}
+
+.nav-menu {
+  display: flex;
+  gap: 40px;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.navbar p {
+  font-size: 25px;
+  font-weight: 700;
+  color: #f3f5f7;
+}
+
+.navbar li {
+  color: #f3f5f7;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.summary {
+  background-color: #404876;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 40px;
+}
+
+.summary-container,
+.meal-container {
+  width: 100%;
+  max-width: 1280px;
+  padding: 20px 40px;
+}
+
+.progress-circle {
+  position: relative;
+}
+
+circle {
+  fill: transparent;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+}
+
+.progress-circle-foreground {
+  stroke-linecap: round;
+  animation: progress-frames 2s ease-out forwards;
+}
+
+@keyframes progress-frames {
+  0% {
+    stroke-dashoffset: 534;
+  }
+}
+
+.progress-circle-background {
+  stroke: rgba(255, 255, 255, 0.1);
+}
+
+.progress-circle-text {
+  color: #f3f5f7;
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  letter-spacing: 1px;
+}
+
+.meal-card {
+  background-color: #404876;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding: 40px;
+}
+
+.meal-title {
+  color: #faf9f8;
+  font-size: 25px;
+  font-weight: 700;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.meal-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 50px;
+}
+
+.food-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.empty-cta {
+  align-self: center;
+  color: #f3f5f7;
+  font-size: 20px;
+}
+
+.food-table {
+  width: 100%;
+  color: #f3f5f7;
+  text-align: center;
+  table-layout: fixed;
+  border-spacing: 0 10px;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+
+.food-container > button {
+  align-self: center;
+  padding: 10px 20px;
+  border-radius: 10px;
+  background-color: #2e3351;
+  color: #f3f5f7;
+  font-size: 18px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.food-container > button:hover {
+  background-color: #4d858d;
+}
+
+.food-container > button img {
+  width: 30px;
+  vertical-align: middle;
+}
+
+.progress-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.progress-container > p {
+  color: #f3f5f7;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.food-row:nth-child(odd) {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+td,
+th {
+  padding: 10px;
+  letter-spacing: 1px;
+  vertical-align: middle;
+}
+
+th {
+  padding-top: 0;
+}
+
+.chart-wrapper {
+  height: 300px;
+  width: 300px;
+  position: relative;
+}
+
+.chart-wrapper p {
+  position: absolute;
+  top: 44%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  letter-spacing: 1px;
+  color: #f3f5f7;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.expand-icon {
+  cursor: pointer;
+}
+
+.expand-icon:hover {
+  transform: scale(1.2);
+}
+
+.food-row img {
+  width: 20px;
+  vertical-align: middle;
+}
+
+.food-row img:hover {
+  transform: scale(1.2);
+  cursor: pointer;
+}
+
+.food-row:hover {
+  background-color: #4d858d;
+}
+
+/* .food-row button {
+  padding: 3px 6px;
+  border-radius: 5px;
+  background-color: rgba(255, 255, 255, 0.5);
+  color: #191936;
+  font-size: 13px;
+  letter-spacing: 1px;
+  cursor: pointer;
+} */
+
+.search-area {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.search-bar {
+  width: 100%;
+  display: flex;
+  gap: 20px;
+}
+
+.search-container {
+  min-width: 50%;
+}
+
+.search-bar input {
+  height: 40px;
+  width: 100%;
+  padding: 10px;
+  outline: none;
+  border: none;
+  border-radius: 10px;
+  font-size: 20px;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #f3f5f7;
+}
+
+.search-bar input:focus {
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.search-bar input::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.search-bar button {
+  padding: 10px 20px;
+  border-radius: 10px;
+  background-color: #2e3351;
+  color: #f3f5f7;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  height: 40px;
+  width: 30%;
+}
+
+.search-bar button:hover {
+  background-color: #4d858d;
+  color: #f3f5f7;
+}
+
+.suggestion-box {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.suggestion-box div {
+  height: 50px;
+  padding: 10px;
+  font-size: 20px;
+  color: #f3f5f7;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-top: 2px solid #404876;
+  cursor: pointer;
+}
+
+.suggestion-box div:hover {
+  background-color: #2e3351;
+}
+
+.food-card {
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.1);
+  display: flex;
+  gap: 80px;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.food-card-right {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.ingredient-form-row {
+  display: flex;
+  color: #f3f5f7;
+  height: 40px;
+  align-items: center;
+  gap: 10px;
+}
+
+.food-card-right p {
+  font-size: 30px;
+}
+
+.ingredient-form-row label {
+  width: 30%;
+  font-size: 20px;
+}
+
+.ingredient-form-row input,
+.ingredient-form-row select {
+  width: 60%;
+  font-size: 15px;
+  padding: 5px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  color: #f3f5f7;
+}
+
+.ingredient-form-row input:focus,
+.ingredient-form-row select:focus {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.ingredient-form-row button {
+  padding: 5px 10px;
+  border-radius: 10px;
+  background-color: #2e3351;
+  color: #f3f5f7;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  width: 35%;
+}
+
+.ingredient-form-row button:hover {
+  background-color: #4d858d;
+  color: #f3f5f7;
+}
+
+.nutrition-icon img {
+  width: 35px;
+  vertical-align: middle;
+}
+
+canvas.donut-chart {
+  position: relative;
+  z-index: 2;
+}

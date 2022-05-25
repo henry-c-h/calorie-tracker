@@ -1,0 +1,54 @@
+{
+  "results": [
+    {
+      "id": 1123,
+      "name": "egg",
+      "image": "egg.png",
+      "aisle": "Milk, Eggs, Other Dairy",
+      "possibleUnits": [
+        "small",
+        "jumbo",
+        "large",
+        "piece",
+        "g",
+        "medium",
+        "oz",
+        "extra large",
+        "dozen",
+        "cup",
+        "serving"
+      ]
+    },
+    {
+      "id": 1057,
+      "name": "eggnog",
+      "image": "eggnog.png",
+      "aisle": "Milk, Eggs, Other Dairy",
+      "possibleUnits": ["quart", "g", "oz", "fluid ounce", "cup"]
+    },
+    {
+      "id": 1125,
+      "name": "egg yolk",
+      "image": "egg-yolk.jpg",
+      "aisle": "Milk, Eggs, Other Dairy",
+      "possibleUnits": ["large", "piece", "g", "oz", "cup"]
+    },
+    {
+      "id": 11209,
+      "name": "eggplant",
+      "image": "eggplant.png",
+      "aisle": "Produce",
+      "possibleUnits": ["piece", "slice", "g", "oz", "eggplant", "cup"]
+    },
+    {
+      "id": 1124,
+      "name": "egg white",
+      "image": "egg-white.jpg",
+      "aisle": "Milk, Eggs, Other Dairy",
+      "possibleUnits": ["large", "piece", "g", "oz", "cup"]
+    }
+  ],
+  "offset": 0,
+  "number": 5,
+  "totalResults": 23
+}
