@@ -3,21 +3,10 @@ import DonutChart from './DonutChart';
 import FoodTable from './FoodTable';
 import FoodSearchArea from './FoodSearchArea';
 
-import searchResults from '../autocomplete.json';
-import ingredientInfo from '../ingredientInfo.json';
-
 const Meal = (props) => {
-  const macros = ['Protein', 'Carbohydrates', 'Fat'];
   const [expand, setExpand] = useState(true);
   const [showAddButton, setShowAddButton] = useState(true);
   const [showSearchArea, setShowSearchArea] = useState(false);
-  const [showAutocomplete, setShowAutocomplete] = useState(false);
-  const [showFoodCard, setShowFoodCard] = useState(false);
-  const [inputValue, setInputValue] = useState('');
-  const [searchValue, setSearchValue] = useState('');
-  const [quantity, setQuantity] = useState(1);
-  const [unit, setUnit] = useState('');
-  const [fetchInProgess, setFetchInProgress] = useState(false);
 
   function handleExpandIconClick() {
     setExpand((prev) => !prev);
@@ -28,58 +17,13 @@ const Meal = (props) => {
     setShowSearchArea(true);
   }
 
-  function handleCloseSearch() {
-    setShowAddButton(true);
+  function handleCloseSearchClick() {
     setShowSearchArea(false);
-    setInputValue('');
-    setSearchValue('');
-    setUnit('');
-    setQuantity(1);
-  }
-
-  function handleSearchInputChange(e) {
-    setInputValue(e.target.value);
-    setShowAutocomplete(true);
-    if (!e.target.value) setShowAutocomplete(false);
-    setShowFoodCard(false);
-  }
-
-  function handleIngredientClick(id) {
-    setShowAutocomplete(false);
-    setSearchValue(
-      searchResults.results.filter((result) => result.id === id)[0].name
-    );
-    setInputValue('');
-    setShowFoodCard(true);
-  }
-
-  function handleQuantityChange(e) {
-    setQuantity(e.target.value);
-    // TODO
-    setFetchInProgress(true);
-  }
-
-  function handleUnitChange(e) {
-    setUnit(e.target.value);
-  }
-
-  function handleClearSearch() {
-    setInputValue('');
+    setShowAddButton(true);
   }
 
   function handleAddFoodClick(newFood) {
     props.setConsumedFood((oldList) => [newFood, ...oldList]);
-    setShowFoodCard(false);
-    setUnit('');
-    setQuantity(1);
-    setSearchValue('');
-  }
-
-  function handleCancelAddFoodClick() {
-    setShowFoodCard(false);
-    setUnit('');
-    setQuantity(1);
-    setSearchValue('');
   }
 
   function handleDeleteFood(id) {
@@ -144,24 +88,8 @@ const Meal = (props) => {
               {showSearchArea ? (
                 <FoodSearchArea
                   mealType={props.mealType}
-                  showAutocomplete={showAutocomplete}
-                  showFoodCard={showFoodCard}
-                  handleSearchInputChange={handleSearchInputChange}
-                  inputValue={inputValue}
-                  searchResults={searchResults}
-                  handleIngredientClick={handleIngredientClick}
-                  handleClearSearch={handleClearSearch}
-                  handleCloseSearch={handleCloseSearch}
-                  ingredientInfo={ingredientInfo}
-                  macros={macros}
-                  searchValue={searchValue}
-                  unit={unit}
-                  handleUnitChange={handleUnitChange}
-                  quantity={quantity}
-                  handleQuantityChange={handleQuantityChange}
-                  fetchInProgess={fetchInProgess}
                   handleAddFoodClick={handleAddFoodClick}
-                  handleCancelAddFoodClick={handleCancelAddFoodClick}
+                  handleCloseSearchClick={handleCloseSearchClick}
                 />
               ) : null}
             </div>

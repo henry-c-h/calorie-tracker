@@ -1,32 +1,31 @@
 import SearchBar from './SearchBar';
 import FoodCard from './FoodCard';
+import { useState } from 'react';
 
 const FoodSearchArea = (props) => {
+  const [inputValue, setInputValue] = useState('');
+  const [currentItem, setCurrentItem] = useState(null);
+
+  function handleSearchResultClick(id, name) {
+    setInputValue('');
+    setCurrentItem({ name: name, id: id });
+  }
+
   return (
     <div className="search-area">
       <SearchBar
-        showAutocomplete={props.showAutocomplete}
-        handleSearchInputChange={props.handleSearchInputChange}
-        inputValue={props.inputValue}
-        searchResults={props.searchResults}
-        handleIngredientClick={props.handleIngredientClick}
-        handleClearSearch={props.handleClearSearch}
-        handleCloseSearch={props.handleCloseSearch}
+        inputValue={inputValue}
+        setInputValue={setInputValue}
+        setCurrentItem={setCurrentItem}
+        handleSearchResultClick={handleSearchResultClick}
+        handleCloseSearchClick={props.handleCloseSearchClick}
       />
-      {props.searchValue && props.showFoodCard ? (
+      {currentItem ? (
         <FoodCard
           mealType={props.mealType}
-          ingredientInfo={props.ingredientInfo}
-          macros={props.macros}
-          searchValue={props.searchValue}
-          unit={props.unit}
-          handleUnitChange={props.handleUnitChange}
-          searchResults={props.searchResults}
-          quantity={props.quantity}
-          handleQuantityChange={props.handleQuantityChange}
-          fetchInProgess={props.fetchInProgess}
+          currentItem={currentItem}
+          setCurrentItem={setCurrentItem}
           handleAddFoodClick={props.handleAddFoodClick}
-          handleCancelAddFoodClick={props.handleCancelAddFoodClick}
         />
       ) : null}
     </div>

@@ -1,33 +1,59 @@
 import FoodUnitDropdown from './FoodUnitDropdown';
+import { useState } from 'react';
+// import { useDispatch } from 'react-redux'
+// import { addFoodItem } from '../features/mealSlice';
 
 const FoodForm = (props) => {
+  // const dispatch = useDispatch()
+  const [quantity, setQuantity] = useState(1);
+  const [unit, setUnit] = useState('');
+  const [fetchInProgess, setFetchInProgress] = useState(false);
+
+  function handleUnitChange(e) {
+    setUnit(e.target.value);
+    setFetchInProgress(true);
+    setTimeout(() => {
+      // TODO
+      // add fetch ingredientInfo logic
+      setFetchInProgress(false);
+    }, 1000);
+  }
+
+  function handleQuantityChange(e) {
+    setQuantity(e.target.value);
+  }
+
+  function handleCancelAddFoodClick() {
+    props.setCurrentItem(null);
+  }
+
   return (
     <form
       className="food-card-right"
       onSubmit={(e) => {
         e.preventDefault();
         props.handleAddFoodClick({
-          food: props.searchValue,
+          food: props.currentItem.name,
           mealType: props.mealType,
-          unit: props.unit,
-          quantity: props.quantity,
+          unit: unit,
+          quantity: quantity,
           protein:
-            props.quantity *
+            quantity *
             props.ingredientInfo.nutrition.nutrients.filter(
               (nutrient) => nutrient.name === 'Protein'
             )[0].amount,
           carbs:
-            props.quantity *
+            quantity *
             props.ingredientInfo.nutrition.nutrients.filter(
               (nutrient) => nutrient.name === 'Carbohydrates'
             )[0].amount,
           fat:
-            props.quantity *
+            quantity *
             props.ingredientInfo.nutrition.nutrients.filter(
               (nutrient) => nutrient.name === 'Fat'
             )[0].amount,
           totalCalories:
-            props.quantity *
+            quantity *
             props.ingredientInfo.nutrition.nutrients.filter(
               (nutrient) => nutrient.name === 'Calories'
             )[0].amount,
@@ -38,15 +64,14 @@ const FoodForm = (props) => {
         <span className="nutrition-icon">
           <img src="./assets/nutrition-icon.svg" alt="nutrition icon" />
         </span>
-        {props.searchValue}
+        {props.currentItem.name}
       </p>
       <div className="ingredient-form-row">
         <label htmlFor="food-unit">unit</label>
         <FoodUnitDropdown
-          unit={props.unit}
-          handleUnitChange={props.handleUnitChange}
-          searchResults={props.searchResults}
-          searchValue={props.searchValue}
+          unit={unit}
+          handleUnitChange={handleUnitChange}
+          ingredientInfo={props.ingredientInfo}
         />
       </div>
       <div className="ingredient-form-row">
@@ -56,15 +81,15 @@ const FoodForm = (props) => {
           name="food-quantity"
           id="food-quantity"
           min={1}
-          onChange={props.handleQuantityChange}
-          value={props.quantity}
+          onChange={handleQuantityChange}
+          value={quantity}
         />
       </div>
-      {props.unit ? (
+      {!fetchInProgess ? (
         <div className="ingredient-form-row">
           <p>
             {`${
-              props.quantity *
+              quantity *
               props.ingredientInfo.nutrition.nutrients.filter(
                 (nutrient) => nutrient.name === 'Calories'
               )[0].amount
@@ -72,15 +97,14 @@ const FoodForm = (props) => {
             calories`}
           </p>
         </div>
-      ) : props.fetchInProgess ? (
+      ) : (
         <div className="ingredient-form-row">
           <p>Calculating...</p>
         </div>
-      ) : null}
-
+      )}
       <div className="ingredient-form-row">
         <button type="submit">Confirm add</button>
-        <button type="button" onClick={props.handleCancelAddFoodClick}>
+        <button type="button" onClick={handleCancelAddFoodClick}>
           Cancel add
         </button>
       </div>

@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { foodList } from '../data';
 
 export const mealSlice = createSlice({
-  name: 'foodList',
+  name: 'meal',
   initialState: foodList,
   reducers: {
     addFoodItem: (state, action) => {
@@ -22,5 +22,6 @@ export const mealSlice = createSlice({
   },
 });
 
+export const selectMeal = (state) => state.meal;
 export const { addFoodItem } = mealSlice.actions;
 export default mealSlice.reducer;

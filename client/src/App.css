@@ -318,7 +318,20 @@ th {
 
 .suggestion-box {
   border-radius: 10px;
-  overflow: hidden;
+  overflow: overlay;
+  max-height: 200px;
+}
+
+.suggestion-box::-webkit-scrollbar {
+  width: 12px;
+  border-radius: 10px;
+  background-color: #9ea0ae;
+}
+
+.suggestion-box::-webkit-scrollbar-thumb {
+  background-color: #2e3351;
+  width: 5px;
+  border-radius: 10px;
 }
 
 .suggestion-box div {

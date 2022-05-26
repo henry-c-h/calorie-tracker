@@ -8,13 +8,11 @@ const FoodUnitDropdown = (props) => {
       onChange={props.handleUnitChange}
     >
       <option value="">-- please choose a unit --</option>
-      {props.searchResults.results
-        .filter((result) => result.name === props.searchValue)[0]
-        .possibleUnits.map((unit, idx) => (
-          <option key={idx} value={unit}>
-            {unit}
-          </option>
-        ))}
+      {props.ingredientInfo.possibleUnits.map((unit, idx) => (
+        <option key={idx} value={unit}>
+          {unit}
+        </option>
+      ))}
     </select>
   );
 };

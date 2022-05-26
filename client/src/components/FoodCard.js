@@ -1,32 +1,32 @@
 import DonutChart from './DonutChart';
 import FoodForm from './FoodForm';
+import ingredient from '../ingredientInfo.json';
+import { useState } from 'react';
 
 const FoodCard = (props) => {
+  const [ingredientInfo, setIngredientInfo] = useState(ingredient);
+  const macros = ['Protein', 'Carbohydrates', 'Fat'];
+
+  // TODO
+  // fetch ingredient info here
+
   return (
     <div className="food-card">
       <DonutChart
         labelList={['protein', 'carbs', 'fat']}
-        dataList={props.ingredientInfo.nutrition.nutrients
-          .filter((nutrient) => props.macros.includes(nutrient.name))
-          .sort(
-            (a, b) =>
-              props.macros.indexOf(a.name) - props.macros.indexOf(b.name)
-          )
+        dataList={ingredientInfo.nutrition.nutrients
+          .filter((nutrient) => macros.includes(nutrient.name))
+          .sort((a, b) => macros.indexOf(a.name) - macros.indexOf(b.name))
           .map((macro) => macro.amount)}
         text="nutrition profile"
       />
       <FoodForm
         mealType={props.mealType}
-        searchValue={props.searchValue}
-        unit={props.unit}
-        handleUnitChange={props.handleUnitChange}
-        searchResults={props.searchResults}
-        quantity={props.quantity}
-        handleQuantityChange={props.handleQuantityChange}
-        ingredientInfo={props.ingredientInfo}
-        fetchInProgess={props.fetchInProgess}
+        currentItem={props.currentItem}
+        setCurrentItem={props.setCurrentItem}
+        ingredientInfo={ingredientInfo}
+        setIngredientInfo={setIngredientInfo}
         handleAddFoodClick={props.handleAddFoodClick}
-        handleCancelAddFoodClick={props.handleCancelAddFoodClick}
       />
     </div>
   );
