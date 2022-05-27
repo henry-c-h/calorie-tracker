@@ -159,7 +159,8 @@ circle {
   table-layout: fixed;
   border-spacing: 0 10px;
   border-collapse: collapse;
-  font-size: 15px;
+  font-size: 16px;
+  font-weight: 500;
 }
 
 .food-container > button {
@@ -252,16 +253,6 @@ th {
 .food-row:hover {
   background-color: #4d858d;
 }
-
-/* .food-row button {
-  padding: 3px 6px;
-  border-radius: 5px;
-  background-color: rgba(255, 255, 255, 0.5);
-  color: #191936;
-  font-size: 13px;
-  letter-spacing: 1px;
-  cursor: pointer;
-} */
 
 .search-area {
   display: flex;
@@ -357,6 +348,12 @@ th {
   border-radius: 10px;
 }
 
+.fetch-begin {
+  color: #f3f5f7;
+  font-size: 20px;
+  justify-content: center;
+}
+
 .food-card-right {
   display: flex;
   flex-direction: column;
@@ -422,4 +419,22 @@ th {
 canvas.donut-chart {
   position: relative;
   z-index: 2;
+}
+
+.quantity-change-buttons {
+  display: flex;
+  justify-content: space-around;
+}
+
+.quantity-change-buttons img {
+  border-radius: 50%;
+  padding: 2px;
+  width: 14px;
+  height: 14px;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.quantity-change-buttons div:hover {
+  transform: scale(1.1);
+  cursor: pointer;
 }

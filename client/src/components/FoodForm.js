@@ -1,13 +1,14 @@
 import FoodUnitDropdown from './FoodUnitDropdown';
 import { useState } from 'react';
-// import { useDispatch } from 'react-redux'
-// import { addFoodItem } from '../features/mealSlice';
+import { useDispatch } from 'react-redux';
+import { addFoodItem } from '../features/foodListSlice';
 
 const FoodForm = (props) => {
-  // const dispatch = useDispatch()
   const [quantity, setQuantity] = useState(1);
   const [unit, setUnit] = useState('');
   const [fetchInProgess, setFetchInProgress] = useState(false);
+
+  const dispatch = useDispatch();
 
   function handleUnitChange(e) {
     setUnit(e.target.value);
@@ -27,39 +28,44 @@ const FoodForm = (props) => {
     props.setCurrentItem(null);
   }
 
+  function getUnitCalories() {
+    return props.ingredientInfo.nutrition.nutrients.filter(
+      (nutrient) => nutrient.name === 'Calories'
+    )[0].amount;
+  }
+
+  function getUnitMacro(macroType) {
+    return props.ingredientInfo.nutrition.nutrients.filter(
+      (nutrient) => nutrient.name === macroType
+    )[0].amount;
+  }
+
+  function calculateMacro(macroType) {
+    return quantity * getUnitMacro(macroType);
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    const item = {
+      foodId: props.ingredientInfo.id,
+      food: props.currentItem.name,
+      mealType: props.mealType,
+      unit: unit,
+      quantity: quantity,
+      unitProtein: getUnitMacro('Protein'),
+      unitCarbs: getUnitMacro('Carbohydrates'),
+      unitFat: getUnitMacro('Fat'),
+      protein: calculateMacro('Protein'),
+      carbs: calculateMacro('Carbohydrates'),
+      fat: calculateMacro('Fat'),
+      unitCalories: getUnitCalories(),
+      totalCalories: quantity * getUnitCalories(),
+    };
+    dispatch(addFoodItem(item));
+  }
+
   return (
-    <form
-      className="food-card-right"
-      onSubmit={(e) => {
-        e.preventDefault();
-        props.handleAddFoodClick({
-          food: props.currentItem.name,
-          mealType: props.mealType,
-          unit: unit,
-          quantity: quantity,
-          protein:
-            quantity *
-            props.ingredientInfo.nutrition.nutrients.filter(
-              (nutrient) => nutrient.name === 'Protein'
-            )[0].amount,
-          carbs:
-            quantity *
-            props.ingredientInfo.nutrition.nutrients.filter(
-              (nutrient) => nutrient.name === 'Carbohydrates'
-            )[0].amount,
-          fat:
-            quantity *
-            props.ingredientInfo.nutrition.nutrients.filter(
-              (nutrient) => nutrient.name === 'Fat'
-            )[0].amount,
-          totalCalories:
-            quantity *
-            props.ingredientInfo.nutrition.nutrients.filter(
-              (nutrient) => nutrient.name === 'Calories'
-            )[0].amount,
-        });
-      }}
-    >
+    <form className="food-card-right" onSubmit={handleSubmit}>
       <p className="ingredient-form-row">
         <span className="nutrition-icon">
           <img src="./assets/nutrition-icon.svg" alt="nutrition icon" />
@@ -85,15 +91,10 @@ const FoodForm = (props) => {
           value={quantity}
         />
       </div>
-      {!fetchInProgess ? (
+      {!unit ? null : !fetchInProgess ? (
         <div className="ingredient-form-row">
           <p>
-            {`${
-              quantity *
-              props.ingredientInfo.nutrition.nutrients.filter(
-                (nutrient) => nutrient.name === 'Calories'
-              )[0].amount
-            }
+            {`${Math.floor(quantity * getUnitCalories())}
             calories`}
           </p>
         </div>

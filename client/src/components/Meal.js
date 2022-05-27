@@ -2,11 +2,17 @@ import { useState } from 'react';
 import DonutChart from './DonutChart';
 import FoodTable from './FoodTable';
 import FoodSearchArea from './FoodSearchArea';
+import { useSelector } from 'react-redux';
+import { selectFoodList } from '../features/foodListSlice';
 
 const Meal = (props) => {
   const [expand, setExpand] = useState(true);
   const [showAddButton, setShowAddButton] = useState(true);
   const [showSearchArea, setShowSearchArea] = useState(false);
+
+  const foodList = useSelector(selectFoodList).filter(
+    (food) => food.mealType === props.mealType
+  );
 
   function handleExpandIconClick() {
     setExpand((prev) => !prev);
@@ -20,16 +26,6 @@ const Meal = (props) => {
   function handleCloseSearchClick() {
     setShowSearchArea(false);
     setShowAddButton(true);
-  }
-
-  function handleAddFoodClick(newFood) {
-    props.setConsumedFood((oldList) => [newFood, ...oldList]);
-  }
-
-  function handleDeleteFood(id) {
-    props.setConsumedFood((oldList) =>
-      oldList.filter((food) => food.id !== id)
-    );
   }
 
   function sumMacros(foodList, macroType) {
@@ -52,27 +48,24 @@ const Meal = (props) => {
         </p>
         {expand ? (
           <div className="meal-info">
-            {props.foodList.length > 0 ? (
+            {foodList.length > 0 ? (
               <DonutChart
                 labelList={['protein', 'carbs', 'fat']}
                 dataList={[
-                  sumMacros(props.foodList, 'protein'),
-                  sumMacros(props.foodList, 'carbs'),
-                  sumMacros(props.foodList, 'fat'),
+                  sumMacros(foodList, 'protein'),
+                  sumMacros(foodList, 'carbs'),
+                  sumMacros(foodList, 'fat'),
                 ]}
                 text={`${Math.round(
-                  sumMacros(props.foodList, 'totalCalories')
+                  sumMacros(foodList, 'totalCalories')
                 )} kcal`}
               />
             ) : null}
             <div className="food-container">
-              <FoodTable
-                foodList={props.foodList}
-                handleDeleteFood={handleDeleteFood}
-              />
+              <FoodTable mealType={props.mealType} />
               {showAddButton ? (
                 <>
-                  {props.foodList.length === 0 ? (
+                  {foodList.length === 0 ? (
                     <p className="empty-cta">
                       The diary is empty. Start by adding food items.
                     </p>
@@ -88,7 +81,6 @@ const Meal = (props) => {
               {showSearchArea ? (
                 <FoodSearchArea
                   mealType={props.mealType}
-                  handleAddFoodClick={handleAddFoodClick}
                   handleCloseSearchClick={handleCloseSearchClick}
                 />
               ) : null}
