@@ -3,7 +3,13 @@ const ProgressCircle = (props) => {
   const strokeWidth = 30;
   const radius = (svgWidth - strokeWidth) / 2;
   const circumference = Math.PI * 2 * radius;
-  const consumed = props.consumedRatio * circumference;
+  const consumed = () => {
+    if (props.consumedRatio < 1) {
+      return props.consumedRatio * circumference;
+    } else {
+      return circumference;
+    }
+  };
 
   return (
     <div className="progress-circle">
@@ -16,7 +22,7 @@ const ProgressCircle = (props) => {
           stroke={props.strokeColor}
           strokeWidth={strokeWidth}
           strokeDasharray={`${circumference}, ${circumference}`}
-          strokeDashoffset={`${circumference - consumed}`}
+          strokeDashoffset={`${circumference - consumed()}`}
         />
         <circle
           className="progress-circle-background"

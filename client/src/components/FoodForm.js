@@ -2,11 +2,12 @@ import FoodUnitDropdown from './FoodUnitDropdown';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addFoodItem } from '../features/foodListSlice';
+import { getUnitCalories, getUnitMacro, calculateMacro } from '../utils';
 
 const FoodForm = (props) => {
   const [quantity, setQuantity] = useState(1);
   const [unit, setUnit] = useState('');
-  const [fetchInProgess, setFetchInProgress] = useState(false);
+  const [fetchInProgress, setFetchInProgress] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -28,22 +29,6 @@ const FoodForm = (props) => {
     props.setCurrentItem(null);
   }
 
-  function getUnitCalories() {
-    return props.ingredientInfo.nutrition.nutrients.filter(
-      (nutrient) => nutrient.name === 'Calories'
-    )[0].amount;
-  }
-
-  function getUnitMacro(macroType) {
-    return props.ingredientInfo.nutrition.nutrients.filter(
-      (nutrient) => nutrient.name === macroType
-    )[0].amount;
-  }
-
-  function calculateMacro(macroType) {
-    return quantity * getUnitMacro(macroType);
-  }
-
   function handleSubmit(e) {
     e.preventDefault();
     const item = {
@@ -52,14 +37,14 @@ const FoodForm = (props) => {
       mealType: props.mealType,
       unit: unit,
       quantity: quantity,
-      unitProtein: getUnitMacro('Protein'),
-      unitCarbs: getUnitMacro('Carbohydrates'),
-      unitFat: getUnitMacro('Fat'),
-      protein: calculateMacro('Protein'),
-      carbs: calculateMacro('Carbohydrates'),
-      fat: calculateMacro('Fat'),
-      unitCalories: getUnitCalories(),
-      totalCalories: quantity * getUnitCalories(),
+      unitProtein: getUnitMacro('Protein', props.ingredientInfo),
+      unitCarbs: getUnitMacro('Carbohydrates', props.ingredientInfo),
+      unitFat: getUnitMacro('Fat', props.ingredientInfo),
+      protein: calculateMacro('Protein', quantity, props.ingredientInfo),
+      carbs: calculateMacro('Carbohydrates', quantity, props.ingredientInfo),
+      fat: calculateMacro('Fat', quantity, props.ingredientInfo),
+      unitCalories: getUnitCalories(props.ingredientInfo),
+      totalCalories: quantity * getUnitCalories(props.ingredientInfo),
     };
     dispatch(addFoodItem(item));
   }
@@ -87,14 +72,15 @@ const FoodForm = (props) => {
           name="food-quantity"
           id="food-quantity"
           min={1}
+          max={999999}
           onChange={handleQuantityChange}
           value={quantity}
         />
       </div>
-      {!unit ? null : !fetchInProgess ? (
+      {!unit ? null : !fetchInProgress ? (
         <div className="ingredient-form-row">
           <p>
-            {`${Math.floor(quantity * getUnitCalories())}
+            {`${Math.floor(quantity * getUnitCalories(props.ingredientInfo))}
             calories`}
           </p>
         </div>

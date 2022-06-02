@@ -4,6 +4,7 @@ import FoodTable from './FoodTable';
 import FoodSearchArea from './FoodSearchArea';
 import { useSelector } from 'react-redux';
 import { selectFoodList } from '../features/foodListSlice';
+import { sumMacros } from '../utils';
 
 const Meal = (props) => {
   const [expand, setExpand] = useState(true);
@@ -26,11 +27,6 @@ const Meal = (props) => {
   function handleCloseSearchClick() {
     setShowSearchArea(false);
     setShowAddButton(true);
-  }
-
-  function sumMacros(foodList, macroType) {
-    const macroList = foodList.map((food) => food[macroType]);
-    return macroList.reduce((prev, current) => prev + current);
   }
 
   return (
@@ -56,9 +52,13 @@ const Meal = (props) => {
                   sumMacros(foodList, 'carbs'),
                   sumMacros(foodList, 'fat'),
                 ]}
-                text={`${Math.round(
-                  sumMacros(foodList, 'totalCalories')
-                )} kcal`}
+                text={
+                  Math.round(sumMacros(foodList, 'totalCalories')) > 1000000
+                    ? `${Math.round(
+                        sumMacros(foodList, 'totalCalories') / 1000000
+                      )}m kcal`
+                    : `${Math.round(sumMacros(foodList, 'totalCalories'))} kcal`
+                }
               />
             ) : null}
             <div className="food-container">

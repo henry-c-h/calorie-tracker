@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 const Navbar = () => {
   return (
     <div className="navbar">
@@ -11,9 +13,17 @@ const Navbar = () => {
           Know thy calorie
         </p>
         <ul className="nav-menu">
-          <li>Overview</li>
-          <li>History</li>
-          <li>Settings</li>
+          <li>
+            <Link className="nav-link" to="/">
+              Home
+            </Link>
+          </li>
+          <li>
+            <Link className="nav-link" to="/my-goals">
+              My Goals
+            </Link>
+          </li>
+          {/* <li>History</li> */}
         </ul>
       </div>
     </div>
