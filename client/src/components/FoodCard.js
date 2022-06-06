@@ -33,6 +33,7 @@ const FoodCard = (props) => {
             ingredientInfo={ingredientInfo}
             setIngredientInfo={setIngredientInfo}
             handleAddFoodClick={props.handleAddFoodClick}
+            currentDate={props.currentDate}
           />
         </div>
       )}

@@ -22,11 +22,12 @@ export const fetchFoodListAsync = createAsyncThunk(
 
 export const addFoodItemAsync = createAsyncThunk(
   'foodList/addFoodItem',
-  async ({ mealType, unit, quantity, ingredientInfo }) => {
+  async ({ mealType, unit, quantity, ingredientInfo, currentDate }) => {
     const newItem = {
       foodId: ingredientInfo.id,
       foodName: ingredientInfo.name,
       mealType: mealType,
+      dateConsumed: currentDate,
       unit: unit,
       quantity: quantity,
       unitProtein: getUnitMacro('Protein', ingredientInfo),

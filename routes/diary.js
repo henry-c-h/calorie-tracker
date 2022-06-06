@@ -66,6 +66,7 @@ router.post('/', async (req, res) => {
       foodName: req.body.foodName,
       foodId: req.body.foodId,
       mealType: req.body.mealType,
+      dateConsumed: req.body.dateConsumed,
       unit: req.body.unit,
       quantity: req.body.quantity,
       unitProtein: req.body.unitProtein,

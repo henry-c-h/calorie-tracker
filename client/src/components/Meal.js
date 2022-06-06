@@ -15,7 +15,9 @@ const Meal = (props) => {
   const [showSearchArea, setShowSearchArea] = useState(false);
 
   const foodList = useSelector(selectFoodList).filter(
-    (food) => food.mealType === props.mealType
+    (food) =>
+      food.mealType === props.mealType &&
+      food.dateConsumed.slice(0, 10) === props.currentDate.toISO().slice(0, 10)
   );
 
   const foodListStatus = useSelector(selectFoodListStatus);
@@ -60,7 +62,10 @@ const Meal = (props) => {
           />
         ) : null}
         <div className="food-container">
-          <FoodTable mealType={props.mealType} />
+          <FoodTable
+            mealType={props.mealType}
+            currentDate={props.currentDate}
+          />
           {showAddButton ? (
             <>
               {foodList.length === 0 ? (
@@ -80,6 +85,7 @@ const Meal = (props) => {
             <FoodSearchArea
               mealType={props.mealType}
               handleCloseSearchClick={handleCloseSearchClick}
+              currentDate={props.currentDate}
             />
           ) : null}
         </div>

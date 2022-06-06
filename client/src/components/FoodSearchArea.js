@@ -26,6 +26,7 @@ const FoodSearchArea = (props) => {
           currentItem={currentItem}
           setCurrentItem={setCurrentItem}
           handleAddFoodClick={props.handleAddFoodClick}
+          currentDate={props.currentDate}
         />
       ) : null}
     </div>

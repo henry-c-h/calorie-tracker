@@ -4,8 +4,11 @@ import { useSelector } from 'react-redux';
 import { selectFoodList } from '../features/foodListSlice';
 import { selectGoals } from '../features/goalSlice';
 
-const Summary = () => {
-  const foodList = useSelector(selectFoodList);
+const Summary = (props) => {
+  const foodList = useSelector(selectFoodList).filter(
+    (food) =>
+      food.dateConsumed.slice(0, 10) === props.currentDate.toISO().slice(0, 10)
+  );
   const goals = useSelector(selectGoals);
 
   const consumedCalories = Math.floor(sumMacros(foodList, 'totalCalories'));

@@ -5,6 +5,7 @@ const FoodSchema = new Schema({
   foodName: { type: String, required: true },
   foodId: { type: Number, required: true },
   mealType: { type: String, required: true },
+  dateConsumed: { type: String, required: true },
   unit: { type: String, required: true },
   quantity: { type: Number, required: true },
   unitProtein: { type: Number, required: true },

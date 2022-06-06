@@ -9,7 +9,9 @@ import { selectFoodList } from '../features/foodListSlice';
 const FoodTable = (props) => {
   const dispatch = useDispatch();
   const foodList = useSelector(selectFoodList).filter(
-    (food) => food.mealType === props.mealType
+    (food) =>
+      food.mealType === props.mealType &&
+      food.dateConsumed.slice(0, 10) === props.currentDate.toISO().slice(0, 10)
   );
 
   function handleRemoveFoodItem(id) {

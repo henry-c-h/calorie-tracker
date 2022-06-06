@@ -39,6 +39,7 @@ const FoodForm = (props) => {
         unit,
         quantity,
         ingredientInfo: props.ingredientInfo,
+        currentDate: props.currentDate.toISO(),
       })
     );
   }
