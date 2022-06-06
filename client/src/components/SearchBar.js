@@ -1,20 +1,24 @@
 import { useState } from 'react';
-import searchResults from '../autocomplete.json';
 import SearchResultBox from './SearchResultBox';
 
 const SearchBar = (props) => {
-  const [showSearchBegin, setShowSearchBegin] = useState(false);
-  const [searchResultList, setRearchResultList] = useState([]);
+  const [searchStatus, setSearchStatus] = useState({
+    showSearchBegin: false,
+    searchResultList: [],
+  });
 
   function handleSearchInputChange(e) {
     props.setInputValue(e.target.value);
     props.setCurrentItem(null);
-    setShowSearchBegin(true);
-    setTimeout(() => {
-      setRearchResultList(searchResults.results);
-      // setRearchResultList([]);
-      setShowSearchBegin(false);
-    }, 1000);
+
+    if (e.target.value) {
+      setSearchStatus({ showSearchBegin: true });
+      fetch(`/api/diary/search/${e.target.value}`)
+        .then((res) => res.json())
+        .then((data) => {
+          setSearchStatus({ showSearchBegin: false, searchResultList: data });
+        });
+    }
   }
 
   function handleClearSearch() {
@@ -32,8 +36,8 @@ const SearchBar = (props) => {
         />
         {props.inputValue ? (
           <SearchResultBox
-            searchResultList={searchResultList}
-            showSearchBegin={showSearchBegin}
+            searchResultList={searchStatus.searchResultList}
+            showSearchBegin={searchStatus.showSearchBegin}
             handleSearchResultClick={props.handleSearchResultClick}
           />
         ) : null}

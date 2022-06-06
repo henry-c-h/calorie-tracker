@@ -1,8 +1,8 @@
 import FoodUnitDropdown from './FoodUnitDropdown';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addFoodItem } from '../features/foodListSlice';
-import { getUnitCalories, getUnitMacro, calculateMacro } from '../utils';
+import { addFoodItemAsync } from '../features/foodListSlice';
+import { getUnitCalories } from '../utils';
 
 const FoodForm = (props) => {
   const [quantity, setQuantity] = useState(1);
@@ -14,11 +14,13 @@ const FoodForm = (props) => {
   function handleUnitChange(e) {
     setUnit(e.target.value);
     setFetchInProgress(true);
-    setTimeout(() => {
-      // TODO
-      // add fetch ingredientInfo logic
-      setFetchInProgress(false);
-    }, 1000);
+
+    fetch(`/api/diary/ingredient/${props.currentItem.id}/${e.target.value}`)
+      .then((res) => res.json())
+      .then((data) => {
+        props.setIngredientInfo(data);
+      })
+      .then(setFetchInProgress(false));
   }
 
   function handleQuantityChange(e) {
@@ -31,22 +33,14 @@ const FoodForm = (props) => {
 
   function handleSubmit(e) {
     e.preventDefault();
-    const item = {
-      foodId: props.ingredientInfo.id,
-      food: props.currentItem.name,
-      mealType: props.mealType,
-      unit: unit,
-      quantity: quantity,
-      unitProtein: getUnitMacro('Protein', props.ingredientInfo),
-      unitCarbs: getUnitMacro('Carbohydrates', props.ingredientInfo),
-      unitFat: getUnitMacro('Fat', props.ingredientInfo),
-      protein: calculateMacro('Protein', quantity, props.ingredientInfo),
-      carbs: calculateMacro('Carbohydrates', quantity, props.ingredientInfo),
-      fat: calculateMacro('Fat', quantity, props.ingredientInfo),
-      unitCalories: getUnitCalories(props.ingredientInfo),
-      totalCalories: quantity * getUnitCalories(props.ingredientInfo),
-    };
-    dispatch(addFoodItem(item));
+    dispatch(
+      addFoodItemAsync({
+        mealType: props.mealType,
+        unit,
+        quantity,
+        ingredientInfo: props.ingredientInfo,
+      })
+    );
   }
 
   return (

@@ -1,16 +1,27 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateGoals, resetGoals, selectGoals } from '../features/goalSlice';
+import {
+  updateGoalsAsync,
+  resetGoalsAsync,
+  selectGoals,
+} from '../features/goalSlice';
 import { convertRatioToGrams } from '../utils';
 
 const Goal = () => {
   const goals = useSelector(selectGoals);
-  const [calorieGoal, setCalorieGoal] = useState(goals.calorieGoal);
-  const [protein, setProtein] = useState(goals.protein);
-  const [carbs, setCarbs] = useState(goals.carbs);
-  const [fat, setFat] = useState(goals.fat);
+  const [calorieGoal, setCalorieGoal] = useState(0);
+  const [protein, setProtein] = useState(0);
+  const [carbs, setCarbs] = useState(0);
+  const [fat, setFat] = useState(0);
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    setCalorieGoal(goals.calorieGoal);
+    setProtein(goals.protein);
+    setCarbs(goals.carbs);
+    setFat(goals.fat);
+  }, [goals]);
 
   const isValidRatio = () => protein + carbs + fat === 100;
 
@@ -26,24 +37,13 @@ const Goal = () => {
 
   function handleSubmit(e) {
     e.preventDefault();
-    const newGoals = {
-      calorieGoal: calorieGoal,
-      protein: protein,
-      carbs: carbs,
-      fat: fat,
-      proteinInGrams: convertRatioToGrams('protein', protein, calorieGoal),
-      carbsInGrams: convertRatioToGrams('carbs', carbs, calorieGoal),
-      fatInGrams: convertRatioToGrams('fat', fat, calorieGoal),
-    };
-    dispatch(updateGoals(newGoals));
+    dispatch(
+      updateGoalsAsync({ id: goals._id, calorieGoal, protein, carbs, fat })
+    );
   }
 
   function handleResetClick() {
-    setCalorieGoal(2000);
-    setProtein(35);
-    setCarbs(40);
-    setFat(25);
-    dispatch(resetGoals());
+    dispatch(resetGoalsAsync(goals._id));
   }
 
   return (

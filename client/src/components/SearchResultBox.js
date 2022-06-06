@@ -17,12 +17,13 @@ const SearchResultBox = (props) => {
       );
     });
     return <div className="suggestion-box">{suggestions}</div>;
+  } else if (props.searchResultList.length === 0) {
+    return (
+      <div className="suggestion-box">
+        <div>No result found. Try a different search.</div>
+      </div>
+    );
   }
-  return (
-    <div className="suggestion-box">
-      <div>No result found. Try a different search.</div>
-    </div>
-  );
 };
 
 export default SearchResultBox;

@@ -3,7 +3,10 @@ import DonutChart from './DonutChart';
 import FoodTable from './FoodTable';
 import FoodSearchArea from './FoodSearchArea';
 import { useSelector } from 'react-redux';
-import { selectFoodList } from '../features/foodListSlice';
+import {
+  selectFoodList,
+  selectFoodListStatus,
+} from '../features/foodListSlice';
 import { sumMacros } from '../utils';
 
 const Meal = (props) => {
@@ -14,6 +17,9 @@ const Meal = (props) => {
   const foodList = useSelector(selectFoodList).filter(
     (food) => food.mealType === props.mealType
   );
+
+  const foodListStatus = useSelector(selectFoodListStatus);
+  const error = useSelector((state) => state.foodList.error);
 
   function handleExpandIconClick() {
     setExpand((prev) => !prev);
@@ -29,6 +35,60 @@ const Meal = (props) => {
     setShowAddButton(true);
   }
 
+  let content;
+
+  if (foodListStatus === 'loading') {
+    content = <p className="diary-status">Loading...</p>;
+  } else if (foodListStatus === 'succeeded') {
+    content = (
+      <div className="meal-info">
+        {foodList.length > 0 ? (
+          <DonutChart
+            labelList={['protein', 'carbs', 'fat']}
+            dataList={[
+              sumMacros(foodList, 'protein'),
+              sumMacros(foodList, 'carbs'),
+              sumMacros(foodList, 'fat'),
+            ]}
+            text={
+              Math.floor(sumMacros(foodList, 'totalCalories')) > 1000000
+                ? `${Math.floor(
+                    sumMacros(foodList, 'totalCalories') / 1000000
+                  )}m kcal`
+                : `${Math.floor(sumMacros(foodList, 'totalCalories'))} kcal`
+            }
+          />
+        ) : null}
+        <div className="food-container">
+          <FoodTable mealType={props.mealType} />
+          {showAddButton ? (
+            <>
+              {foodList.length === 0 ? (
+                <p className="empty-cta">
+                  The diary is empty. Start by adding food items.
+                </p>
+              ) : null}
+              <button onClick={handleAddButtonClick}>
+                Add food
+                <span>
+                  <img src="./assets/add-icon.svg" alt="add icon" />
+                </span>
+              </button>
+            </>
+          ) : null}
+          {showSearchArea ? (
+            <FoodSearchArea
+              mealType={props.mealType}
+              handleCloseSearchClick={handleCloseSearchClick}
+            />
+          ) : null}
+        </div>
+      </div>
+    );
+  } else if (foodListStatus === 'failed') {
+    content = <p className="diary-status">{error}</p>;
+  }
+
   return (
     <div className="meal-container">
       <div className="meal-card">
@@ -42,51 +102,7 @@ const Meal = (props) => {
             )}
           </span>
         </p>
-        {expand ? (
-          <div className="meal-info">
-            {foodList.length > 0 ? (
-              <DonutChart
-                labelList={['protein', 'carbs', 'fat']}
-                dataList={[
-                  sumMacros(foodList, 'protein'),
-                  sumMacros(foodList, 'carbs'),
-                  sumMacros(foodList, 'fat'),
-                ]}
-                text={
-                  Math.round(sumMacros(foodList, 'totalCalories')) > 1000000
-                    ? `${Math.round(
-                        sumMacros(foodList, 'totalCalories') / 1000000
-                      )}m kcal`
-                    : `${Math.round(sumMacros(foodList, 'totalCalories'))} kcal`
-                }
-              />
-            ) : null}
-            <div className="food-container">
-              <FoodTable mealType={props.mealType} />
-              {showAddButton ? (
-                <>
-                  {foodList.length === 0 ? (
-                    <p className="empty-cta">
-                      The diary is empty. Start by adding food items.
-                    </p>
-                  ) : null}
-                  <button onClick={handleAddButtonClick}>
-                    Add food
-                    <span>
-                      <img src="./assets/add-icon.svg" alt="add icon" />
-                    </span>
-                  </button>
-                </>
-              ) : null}
-              {showSearchArea ? (
-                <FoodSearchArea
-                  mealType={props.mealType}
-                  handleCloseSearchClick={handleCloseSearchClick}
-                />
-              ) : null}
-            </div>
-          </div>
-        ) : null}
+        {expand ? content : null}
       </div>
     </div>
   );

@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  removeFoodItem,
-  increaseItemQuantity,
-  decreaseItemQuantity,
+  removeFoodItemAsync,
+  increaseItemQuantityAsync,
+  decreaseItemQuantityAsync,
 } from '../features/foodListSlice';
 import { selectFoodList } from '../features/foodListSlice';
 
@@ -13,33 +13,35 @@ const FoodTable = (props) => {
   );
 
   function handleRemoveFoodItem(id) {
-    dispatch(removeFoodItem(id));
+    dispatch(removeFoodItemAsync(id));
   }
 
-  function handleIncreaseQuantity(id) {
-    dispatch(increaseItemQuantity(id));
+  function handleIncreaseQuantity(food) {
+    dispatch(increaseItemQuantityAsync(food));
   }
 
-  function handleDecreaseQuantity(id) {
-    dispatch(decreaseItemQuantity(id));
+  function handleDecreaseQuantity(food) {
+    if (food.quantity > 1) {
+      dispatch(decreaseItemQuantityAsync(food));
+    }
   }
 
   const foodItems = foodList.map((food, idx) => {
     return (
       <tr className="food-row" key={idx}>
-        <td>{food.food}</td>
+        <td>{food.foodName}</td>
         <td>{food.unit}</td>
         <td>
           {food.quantity}
           <div className="quantity-change-buttons">
             <img
               src="./assets/plus-sign.svg"
-              onClick={() => handleIncreaseQuantity(food.id)}
+              onClick={() => handleIncreaseQuantity(food)}
               alt="plus icon"
             />
             <img
               src="./assets/minus-sign.svg"
-              onClick={() => handleDecreaseQuantity(food.id)}
+              onClick={() => handleDecreaseQuantity(food)}
               alt="minus icon"
             />
           </div>
@@ -50,7 +52,7 @@ const FoodTable = (props) => {
         <td>{Math.floor(food.totalCalories)}</td>
         <td>
           <img
-            onClick={() => handleRemoveFoodItem(food.id)}
+            onClick={() => handleRemoveFoodItem(food._id)}
             src="./assets/delete-icon.svg"
             alt="delete icon"
           />

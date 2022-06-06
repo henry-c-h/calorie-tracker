@@ -21,14 +21,14 @@ button {
 
 .navbar {
   width: 100%;
-  background-color: #404876;
-  display: flex;
-  justify-content: center;
+  background-color: #24283e;
+  position: fixed;
+  z-index: 3;
 }
 
 .nav-content {
   padding: 20px 40px;
-  width: 1280px;
+  min-width: 1280px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -76,6 +76,7 @@ ul {
   justify-content: space-around;
   align-items: center;
   padding: 40px;
+  min-width: 1200px;
 }
 
 .summary-container,
@@ -84,6 +85,11 @@ ul {
   width: 100%;
   max-width: 1280px;
   padding: 20px 40px;
+}
+
+.summary-container,
+.goal-container {
+  margin-top: 120px;
 }
 
 .progress-circle {
@@ -131,6 +137,7 @@ circle {
   flex-direction: column;
   gap: 40px;
   padding: 40px;
+  min-width: 1200px;
 }
 
 .meal-title {
@@ -156,7 +163,8 @@ circle {
   gap: 40px;
 }
 
-.empty-cta {
+.empty-cta,
+.diary-status {
   align-self: center;
   color: #f3f5f7;
   font-size: 20px;
@@ -171,6 +179,7 @@ circle {
   border-collapse: collapse;
   font-size: 16px;
   font-weight: 500;
+  min-width: 700px;
 }
 
 .food-container > button {

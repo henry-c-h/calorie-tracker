@@ -1,18 +1,16 @@
 import DonutChart from './DonutChart';
 import FoodForm from './FoodForm';
-import ingredient from '../ingredientInfo.json';
-import { useState } from 'react';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 const FoodCard = (props) => {
   const [ingredientInfo, setIngredientInfo] = useState(null);
   const macros = ['Protein', 'Carbohydrates', 'Fat'];
 
-  // TODO
-  // fetch ingredient info here
   useEffect(() => {
-    setTimeout(() => setIngredientInfo(ingredient), 2000);
-  }, []);
+    fetch(`/api/diary/ingredient/${props.currentItem.id}`)
+      .then((res) => res.json())
+      .then((data) => setIngredientInfo(data));
+  }, [props.currentItem]);
 
   return (
     <>
