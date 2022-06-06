@@ -606,7 +606,7 @@ input[type='range']::-webkit-slider-thumb {
 }
 
 .goal-form button:disabled {
-  background-color: #9ea0ae;
+  background-color: #8b8c93;
 }
 
 .goal-form button:hover:enabled {

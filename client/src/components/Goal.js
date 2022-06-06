@@ -4,15 +4,20 @@ import {
   updateGoalsAsync,
   resetGoalsAsync,
   selectGoals,
+  selectGoalUpdateStatus,
+  selectGoalFetchStatus,
 } from '../features/goalSlice';
 import { convertRatioToGrams } from '../utils';
 
 const Goal = () => {
   const goals = useSelector(selectGoals);
+  const goalUpdateStatus = useSelector(selectGoalUpdateStatus);
+  const goalFetchStatus = useSelector(selectGoalFetchStatus);
   const [calorieGoal, setCalorieGoal] = useState(0);
   const [protein, setProtein] = useState(0);
   const [carbs, setCarbs] = useState(0);
   const [fat, setFat] = useState(0);
+  const [displayMessage, setDisplayMessage] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -22,6 +27,13 @@ const Goal = () => {
     setCarbs(goals.carbs);
     setFat(goals.fat);
   }, [goals]);
+
+  useEffect(() => {
+    if (goalUpdateStatus === 'success') {
+      setDisplayMessage(true);
+      setTimeout(() => setDisplayMessage(false), 3000);
+    }
+  }, [goalUpdateStatus]);
 
   const isValidRatio = () => protein + carbs + fat === 100;
 
@@ -55,7 +67,7 @@ const Goal = () => {
             <label htmlFor="calorie-goal">Daily calorie target</label>
             <input
               type="number"
-              value={calorieGoal}
+              value={goalFetchStatus === 'loading' ? '' : calorieGoal}
               onChange={(e) => setCalorieGoal(e.target.value)}
               required
             />
@@ -69,7 +81,7 @@ const Goal = () => {
               id="protein"
               min="1"
               max="100"
-              value={protein}
+              value={goalFetchStatus === 'loading' ? '' : protein}
               onChange={handleRatioChange}
             />
             <p>{`${protein}%`}</p>
@@ -83,7 +95,7 @@ const Goal = () => {
               id="carbs"
               min="1"
               max="100"
-              value={carbs}
+              value={goalFetchStatus === 'loading' ? '' : carbs}
               onChange={handleRatioChange}
             />
             <p>{`${carbs}%`}</p>
@@ -97,19 +109,31 @@ const Goal = () => {
               id="fat"
               min="1"
               max="100"
-              value={fat}
+              value={goalFetchStatus === 'loading' ? '' : fat}
               onChange={handleRatioChange}
             />
             <p>{`${fat}%`}</p>
             <p>{`${convertRatioToGrams('fat', fat, calorieGoal)}g`}</p>
           </div>
-          {!isValidRatio() ? (
+          {!isValidRatio() && goalFetchStatus !== 'loading' ? (
             <div className="goal-form-row goal-message">
               ⚠️ Macronutrients must sum up to 100%
             </div>
           ) : null}
+          {goalUpdateStatus === 'success' && displayMessage ? (
+            <div className="goal-form-row goal-message">Success!</div>
+          ) : null}
           <div className="goal-form-row">
-            <button type="submit" disabled={!isValidRatio()}>
+            <button
+              type="submit"
+              disabled={
+                !isValidRatio() ||
+                (goals.calorieGoal === calorieGoal &&
+                  goals.protein === protein &&
+                  goals.carbs === carbs &&
+                  goals.fat === fat)
+              }
+            >
               Update goals
             </button>
             <button type="button" onClick={handleResetClick}>

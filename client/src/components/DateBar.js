@@ -1,9 +1,7 @@
-// import { useState } from 'react';
 import { DateTime } from 'luxon';
 
 const DateBar = (props) => {
   const today = DateTime.now();
-  // const [currentDate, setCurrentDate] = useState(today);
 
   function handlePreviousDayClick() {
     const newDate = props.currentDate.set({ days: props.currentDate.day - 1 });

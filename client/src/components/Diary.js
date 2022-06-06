@@ -35,9 +35,9 @@ const Diary = () => {
         titleText="Breakfast 🥐"
         currentDate={currentDate}
       />
-      {/* <Meal mealType="lunch" titleText="Lunch 🍱" currentDate={currentDate} />
+      <Meal mealType="lunch" titleText="Lunch 🍱" currentDate={currentDate} />
       <Meal mealType="dinner" titleText="Dinner 🍛" currentDate={currentDate} />
-      <Meal mealType="snacks" titleText="Snacks 🍩" currentDate={currentDate} /> */}
+      <Meal mealType="snacks" titleText="Snacks 🍩" currentDate={currentDate} />
     </>
   );
 };
