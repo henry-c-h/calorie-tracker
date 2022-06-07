@@ -69,6 +69,7 @@ const Goal = () => {
               type="number"
               value={goalFetchStatus === 'loading' ? '' : calorieGoal}
               onChange={(e) => setCalorieGoal(e.target.value)}
+              step={100}
               required
             />
             kcal
@@ -128,10 +129,10 @@ const Goal = () => {
               type="submit"
               disabled={
                 !isValidRatio() ||
-                (goals.calorieGoal === calorieGoal &&
-                  goals.protein === protein &&
-                  goals.carbs === carbs &&
-                  goals.fat === fat)
+                (goals.calorieGoal === parseInt(calorieGoal) &&
+                  goals.protein === parseInt(protein) &&
+                  goals.carbs === parseInt(carbs) &&
+                  goals.fat === parseInt(fat))
               }
             >
               Update goals

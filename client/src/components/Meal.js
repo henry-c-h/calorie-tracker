@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import DonutChart from './DonutChart';
 import FoodTable from './FoodTable';
 import FoodSearchArea from './FoodSearchArea';
@@ -22,6 +22,11 @@ const Meal = (props) => {
 
   const foodListStatus = useSelector(selectFoodListStatus);
   const error = useSelector((state) => state.foodList.error);
+
+  useEffect(() => {
+    setShowAddButton(true);
+    setShowSearchArea(false);
+  }, [props.currentDate]);
 
   function handleExpandIconClick() {
     setExpand((prev) => !prev);
