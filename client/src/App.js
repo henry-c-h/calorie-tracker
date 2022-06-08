@@ -16,8 +16,10 @@ function App() {
   const user = useSelector(selectUser);
 
   useEffect(() => {
-    dispatch(fetchUserAsync()).then(() => dispatch(fetchGoalsAsync(user)));
-  }, [dispatch, user]);
+    dispatch(fetchUserAsync()).then((res) => {
+      if (res.payload) dispatch(fetchGoalsAsync(res.payload));
+    });
+  }, [dispatch]);
 
   return (
     <Routes>
