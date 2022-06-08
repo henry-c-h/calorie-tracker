@@ -8,6 +8,7 @@ const cookieParser = require('cookie-parser');
 dotenv.config();
 
 const app = express();
+const PORT = process.env.PORT || 7001;
 
 mongoose
   .connect(process.env.MONGODB_URI, {
@@ -24,6 +25,4 @@ app.use('/api/diary', diaryRoute);
 app.use('/api/goal', goalRoute);
 app.use('/api/auth', authRoute);
 
-app.listen(process.env.PORT, () =>
-  console.log(`server running at ${process.env.PORT}`)
-);
+app.listen(PORT, () => console.log(`server running at ${PORT}`));
