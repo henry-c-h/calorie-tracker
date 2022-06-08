@@ -7,7 +7,7 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   async function handleLogoutClick() {
-    await fetch('/api/auth/logout');
+    await fetch('https://calorie-logging-app.herokuapp.com/api/auth/logout');
     dispatch(fetchUserAsync()).then(() => navigate('/login'));
   }
 

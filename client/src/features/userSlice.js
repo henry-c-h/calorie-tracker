@@ -5,7 +5,9 @@ const initialState = {
 };
 
 export const fetchUserAsync = createAsyncThunk('user/fetchUserId', async () => {
-  const response = await fetch('/api/auth/user');
+  const response = await fetch(
+    'https://calorie-logging-app.herokuapp.com/api/auth/user'
+  );
   const data = response.json();
   return data;
 });

@@ -10,12 +10,15 @@ const initialState = {
 export const fetchFoodListAsync = createAsyncThunk(
   'foodList/fetchFoodList',
   async (user) => {
-    const response = await fetch('/api/diary', {
-      headers: {
-        'Content-Type': 'application/json',
-        user: user,
-      },
-    });
+    const response = await fetch(
+      'https://calorie-logging-app.herokuapp.com/api/diary',
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          user: user,
+        },
+      }
+    );
     const data = await response.json();
     return data;
   }
@@ -42,13 +45,16 @@ export const addFoodItemAsync = createAsyncThunk(
       user: user,
     };
 
-    const response = await fetch('/api/diary', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(newItem),
-    });
+    const response = await fetch(
+      'https://calorie-logging-app.herokuapp.com/api/diary',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newItem),
+      }
+    );
     const data = await response.json();
     return data;
   }
@@ -57,9 +63,12 @@ export const addFoodItemAsync = createAsyncThunk(
 export const removeFoodItemAsync = createAsyncThunk(
   'foodList/removeFoodItem',
   async (id) => {
-    const response = await fetch(`/api/diary/${id}`, {
-      method: 'DELETE',
-    });
+    const response = await fetch(
+      `https://calorie-logging-app.herokuapp.com/api/diary/${id}`,
+      {
+        method: 'DELETE',
+      }
+    );
     if (response.ok) {
       return id;
     }
@@ -69,20 +78,23 @@ export const removeFoodItemAsync = createAsyncThunk(
 export const increaseItemQuantityAsync = createAsyncThunk(
   'foodList/increaseItemQuantity',
   async (food) => {
-    const response = await fetch(`/api/diary/${food._id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        ...food,
-        quantity: food.quantity + 1,
-        totalCalories: food.totalCalories + food.unitCalories,
-        protein: food.protein + food.unitProtein,
-        carbs: food.carbs + food.unitCarbs,
-        fat: food.fat + food.unitFat,
-      }),
-    });
+    const response = await fetch(
+      `https://calorie-logging-app.herokuapp.com/api/diary/${food._id}`,
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...food,
+          quantity: food.quantity + 1,
+          totalCalories: food.totalCalories + food.unitCalories,
+          protein: food.protein + food.unitProtein,
+          carbs: food.carbs + food.unitCarbs,
+          fat: food.fat + food.unitFat,
+        }),
+      }
+    );
     if (response.ok) {
       const data = await response.json();
       return data;
@@ -93,20 +105,23 @@ export const increaseItemQuantityAsync = createAsyncThunk(
 export const decreaseItemQuantityAsync = createAsyncThunk(
   'foodList/decreaseItemQuantity',
   async (food) => {
-    const response = await fetch(`/api/diary/${food._id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        ...food,
-        quantity: food.quantity - 1,
-        totalCalories: food.totalCalories - food.unitCalories,
-        protein: food.protein - food.unitProtein,
-        carbs: food.carbs - food.unitCarbs,
-        fat: food.fat - food.unitFat,
-      }),
-    });
+    const response = await fetch(
+      `https://calorie-logging-app.herokuapp.com/api/diary/${food._id}`,
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...food,
+          quantity: food.quantity - 1,
+          totalCalories: food.totalCalories - food.unitCalories,
+          protein: food.protein - food.unitProtein,
+          carbs: food.carbs - food.unitCarbs,
+          fat: food.fat - food.unitFat,
+        }),
+      }
+    );
     if (response.ok) {
       const data = await response.json();
       return data;

@@ -35,11 +35,14 @@ const Login = () => {
           username,
           password,
         };
-        const response = await fetch('/api/auth/login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(loginData),
-        });
+        const response = await fetch(
+          'https://calorie-logging-app.herokuapp.com/api/auth/login',
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(loginData),
+          }
+        );
         if (response.status === 401) {
           const data = await response.json();
           setErrorMessage(data.errorMessage);

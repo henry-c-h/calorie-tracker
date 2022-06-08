@@ -8,7 +8,7 @@ router.get('/', async (req, res) => {
     const goal = await Goal.findOne({ user: mongoose.Types.ObjectId(user) });
     res.json(goal);
   } catch (err) {
-    res.json(err);
+    res.status(500).send();
   }
 });
 
@@ -27,7 +27,7 @@ router.post('/', async (req, res) => {
     const goal = await newGoal.save();
     res.json(goal);
   } catch (err) {
-    res.json(err);
+    res.status(500).send();
   }
 });
 
@@ -42,7 +42,7 @@ router.put('/:goalId', async (req, res) => {
     );
     res.json(updatedGoal);
   } catch (err) {
-    res.json(err);
+    res.status(500).send();
   }
 });
 

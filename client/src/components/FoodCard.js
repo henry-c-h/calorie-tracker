@@ -7,7 +7,9 @@ const FoodCard = (props) => {
   const macros = ['Protein', 'Carbohydrates', 'Fat'];
 
   useEffect(() => {
-    fetch(`/api/diary/ingredient/${props.currentItem.id}`)
+    fetch(
+      `https://calorie-logging-app.herokuapp.com/api/diary/ingredient/${props.currentItem.id}`
+    )
       .then((res) => res.json())
       .then((data) => setIngredientInfo(data));
   }, [props.currentItem]);

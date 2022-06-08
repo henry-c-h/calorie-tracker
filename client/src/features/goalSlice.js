@@ -18,22 +18,28 @@ const initialState = {
 export const fetchGoalsAsync = createAsyncThunk(
   'goals/fetchGoals',
   async (user) => {
-    const response = await fetch('/api/goal', {
-      headers: {
-        'Content-Type': 'application/json',
-        user: user,
-      },
-    });
-    const data = await response.json();
-    if (!data) {
-      const defaultGoal = await fetch('/api/goal', {
-        method: 'POST',
+    const response = await fetch(
+      'https://calorie-logging-app.herokuapp.com/api/goal',
+      {
         headers: {
           'Content-Type': 'application/json',
           user: user,
         },
-        body: JSON.stringify(initialState.goal),
-      });
+      }
+    );
+    const data = await response.json();
+    if (!data) {
+      const defaultGoal = await fetch(
+        'https://calorie-logging-app.herokuapp.com/api/goal',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            user: user,
+          },
+          body: JSON.stringify(initialState.goal),
+        }
+      );
       const data = defaultGoal.json();
       return data;
     }
@@ -44,21 +50,24 @@ export const fetchGoalsAsync = createAsyncThunk(
 export const updateGoalsAsync = createAsyncThunk(
   'goals/updateGoals',
   async ({ id, calorieGoal, protein, carbs, fat }) => {
-    const response = await fetch(`/api/goal/${id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        calorieGoal,
-        protein,
-        carbs,
-        fat,
-        proteinInGrams: convertRatioToGrams('protein', protein, calorieGoal),
-        carbsInGrams: convertRatioToGrams('carbs', carbs, calorieGoal),
-        fatInGrams: convertRatioToGrams('fat', fat, calorieGoal),
-      }),
-    });
+    const response = await fetch(
+      `https://calorie-logging-app.herokuapp.com/api/goal/${id}`,
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          calorieGoal,
+          protein,
+          carbs,
+          fat,
+          proteinInGrams: convertRatioToGrams('protein', protein, calorieGoal),
+          carbsInGrams: convertRatioToGrams('carbs', carbs, calorieGoal),
+          fatInGrams: convertRatioToGrams('fat', fat, calorieGoal),
+        }),
+      }
+    );
     if (response.ok) {
       const data = await response.json();
       return data;
@@ -69,13 +78,16 @@ export const updateGoalsAsync = createAsyncThunk(
 export const resetGoalsAsync = createAsyncThunk(
   'goals/resetGoals',
   async (goalId) => {
-    const response = await fetch(`/api/goal/${goalId}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(initialState.goal),
-    });
+    const response = await fetch(
+      `https://calorie-logging-app.herokuapp.com/api/goal/${goalId}`,
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(initialState.goal),
+      }
+    );
     if (response.ok) {
       return initialState.goal;
     }

@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
     });
     res.json(allFoodItems);
   } catch (err) {
-    res.json(err);
+    res.status(500).send();
   }
 });
 
@@ -28,7 +28,7 @@ router.get('/search/:searchTerm', async (req, res) => {
     const data = await result.json();
     res.json(data);
   } catch (err) {
-    res.json(err);
+    res.status(500).send();
   }
 });
 
@@ -60,7 +60,7 @@ router.get('/ingredient/:ingredientId/:unit', async (req, res) => {
     const data = await result.json();
     res.json(data);
   } catch (err) {
-    res.json(err);
+    res.status(500).send();
   }
 });
 
@@ -86,7 +86,7 @@ router.post('/', async (req, res) => {
     const newFoodItem = await foodItem.save();
     res.json(newFoodItem);
   } catch (err) {
-    res.json(err);
+    res.status(500).send();
   }
 });
 
@@ -97,7 +97,7 @@ router.delete('/:itemId', async (req, res) => {
     });
     res.json(deletion);
   } catch (err) {
-    res.json(err);
+    res.status(500).send();
   }
 });
 
@@ -112,7 +112,7 @@ router.put('/:itemId', async (req, res) => {
     );
     res.json(updatedItem);
   } catch (err) {
-    res.json(err);
+    res.status(500).send();
   }
 });
 

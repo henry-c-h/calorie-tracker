@@ -17,7 +17,9 @@ const FoodForm = (props) => {
     setUnit(e.target.value);
     setFetchInProgress(true);
 
-    fetch(`/api/diary/ingredient/${props.currentItem.id}/${e.target.value}`)
+    fetch(
+      `https://calorie-logging-app.herokuapp.com/api/diary/ingredient/${props.currentItem.id}/${e.target.value}`
+    )
       .then((res) => res.json())
       .then((data) => {
         props.setIngredientInfo(data);

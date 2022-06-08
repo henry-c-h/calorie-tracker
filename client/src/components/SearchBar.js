@@ -13,7 +13,9 @@ const SearchBar = (props) => {
 
     if (e.target.value) {
       setSearchStatus({ showSearchBegin: true });
-      fetch(`/api/diary/search/${e.target.value}`)
+      fetch(
+        `https://calorie-logging-app.herokuapp.com/api/diary/search/${e.target.value}`
+      )
         .then((res) => res.json())
         .then((data) => {
           setSearchStatus({ showSearchBegin: false, searchResultList: data });
