@@ -16,6 +16,7 @@ const FoodSchema = new Schema({
   protein: { type: Number, required: true },
   carbs: { type: Number, required: true },
   fat: { type: Number, required: true },
+  user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
 });
 
 module.exports = mongoose.model('Food', FoodSchema);

@@ -9,10 +9,11 @@ const initialState = {
 
 export const fetchFoodListAsync = createAsyncThunk(
   'foodList/fetchFoodList',
-  async () => {
+  async (user) => {
     const response = await fetch('/api/diary', {
       headers: {
         'Content-Type': 'application/json',
+        user: user,
       },
     });
     const data = await response.json();
@@ -22,7 +23,7 @@ export const fetchFoodListAsync = createAsyncThunk(
 
 export const addFoodItemAsync = createAsyncThunk(
   'foodList/addFoodItem',
-  async ({ mealType, unit, quantity, ingredientInfo, currentDate }) => {
+  async ({ mealType, unit, quantity, ingredientInfo, currentDate, user }) => {
     const newItem = {
       foodId: ingredientInfo.id,
       foodName: ingredientInfo.name,
@@ -38,6 +39,7 @@ export const addFoodItemAsync = createAsyncThunk(
       fat: calculateMacro('Fat', quantity, ingredientInfo),
       unitCalories: getUnitCalories(ingredientInfo),
       totalCalories: quantity * getUnitCalories(ingredientInfo),
+      user: user,
     };
 
     const response = await fetch('/api/diary', {

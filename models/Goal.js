@@ -9,6 +9,7 @@ const GoalSchema = new Schema({
   proteinInGrams: { type: Number, required: true },
   carbsInGrams: { type: Number, required: true },
   fatInGrams: { type: Number, required: true },
+  user: { type: mongoose.Types.ObjectId, ref: 'User', required: true },
 });
 
 module.exports = mongoose.model('Goal', GoalSchema);

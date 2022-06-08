@@ -9,11 +9,13 @@ import {
   selectFoodListStatus,
   fetchFoodListAsync,
 } from '../features/foodListSlice';
+import { selectUser } from '../features/userSlice';
 
 const Diary = () => {
   const today = DateTime.now();
   const [currentDate, setCurrentDate] = useState(today);
   const dispatch = useDispatch();
+  const user = useSelector(selectUser);
   const foodList = useSelector(selectFoodList).filter(
     (food) =>
       food.dateConsumed.slice(0, 10) === currentDate.toISO().slice(0, 10)
@@ -22,9 +24,9 @@ const Diary = () => {
 
   useEffect(() => {
     if (foodListStatus === 'idle') {
-      dispatch(fetchFoodListAsync());
+      dispatch(fetchFoodListAsync(user));
     }
-  }, [foodListStatus, dispatch]);
+  }, [foodListStatus, dispatch, user]);
 
   return (
     <>

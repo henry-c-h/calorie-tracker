@@ -1,13 +1,15 @@
 import FoodUnitDropdown from './FoodUnitDropdown';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addFoodItemAsync } from '../features/foodListSlice';
 import { getUnitCalories } from '../utils';
+import { selectUser } from '../features/userSlice';
 
 const FoodForm = (props) => {
   const [quantity, setQuantity] = useState(1);
   const [unit, setUnit] = useState('');
   const [fetchInProgress, setFetchInProgress] = useState(false);
+  const user = useSelector(selectUser);
 
   const dispatch = useDispatch();
 
@@ -40,6 +42,7 @@ const FoodForm = (props) => {
         quantity,
         ingredientInfo: props.ingredientInfo,
         currentDate: props.currentDate.toISO(),
+        user,
       })
     );
   }

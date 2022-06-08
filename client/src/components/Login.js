@@ -1,20 +1,56 @@
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { fetchUserAsync } from '../features/userSlice';
 
 const Login = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [missingValues, setMissingValues] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   function handleGoToRegisterClick() {
     navigate('/register');
   }
 
-  function handleLoginClick(e) {
+  function handleUsernameChange(e) {
+    setUsername(e.target.value);
+    setErrorMessage('');
+  }
+
+  function handlePasswordeChange(e) {
+    setPassword(e.target.value);
+    setErrorMessage('');
+  }
+
+  async function handleLoginSubmit(e) {
     e.preventDefault();
     if (username === '' || password === '') {
       setMissingValues(true);
+    } else {
+      try {
+        const loginData = {
+          username,
+          password,
+        };
+        const response = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(loginData),
+        });
+        if (response.status === 401) {
+          const data = await response.json();
+          setErrorMessage(data.errorMessage);
+          setUsername('');
+          setPassword('');
+        } else if (response.status === 200) {
+          dispatch(fetchUserAsync()).then(() => navigate('/'));
+        }
+      } catch (err) {
+        console.error(err);
+      }
     }
   }
 
@@ -26,12 +62,13 @@ const Login = () => {
 
   return (
     <div className="auth-container">
-      <form className="auth-form">
+      <form className="auth-form" onSubmit={handleLoginSubmit}>
         <p>Login</p>
         <div className="auth-form-row">
           {missingValues ? (
             <p className="auth-message">Please fill in both fields</p>
           ) : null}
+          {errorMessage ? <p className="auth-message">{errorMessage}</p> : null}
         </div>
         <div className="auth-form-row">
           <label htmlFor="username">Username</label>
@@ -41,7 +78,7 @@ const Login = () => {
             id="username"
             value={username}
             autoComplete="off"
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={handleUsernameChange}
           />
         </div>
         <div className="auth-form-row">
@@ -51,10 +88,10 @@ const Login = () => {
             name="password"
             id="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={handlePasswordeChange}
           />
         </div>
-        <button onClick={handleLoginClick}>Login</button>
+        <button>Login</button>
         <p>
           New here? Register <span onClick={handleGoToRegisterClick}>here</span>
           !

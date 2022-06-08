@@ -1,6 +1,16 @@
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { fetchUserAsync } from '../features/userSlice';
+import { useDispatch } from 'react-redux';
 
 const Navbar = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  async function handleLogoutClick() {
+    await fetch('/api/auth/logout');
+    dispatch(fetchUserAsync()).then(() => navigate('/login'));
+  }
+
   return (
     <>
       <div className="navbar">
@@ -11,7 +21,7 @@ const Navbar = () => {
               src="./assets/food-icon.svg"
               alt="food icon"
             />
-            Know thy calorie
+            Calorie Tracker
           </p>
           <ul className="nav-menu">
             <li>
@@ -24,7 +34,7 @@ const Navbar = () => {
                 My Goals
               </Link>
             </li>
-            <li>
+            <li onClick={handleLogoutClick}>
               <Link className="nav-link" to="/login">
                 Log out
               </Link>

@@ -1,9 +1,11 @@
 const router = require('express').Router();
 const Goal = require('../models/Goal');
+const mongoose = require('mongoose');
 
 router.get('/', async (req, res) => {
   try {
-    const goal = await Goal.find();
+    const user = req.headers.user;
+    const goal = await Goal.findOne({ user: mongoose.Types.ObjectId(user) });
     res.json(goal);
   } catch (err) {
     res.json(err);
@@ -20,6 +22,7 @@ router.post('/', async (req, res) => {
       proteinInGrams: req.body.proteinInGrams,
       carbsInGrams: req.body.carbsInGrams,
       fatInGrams: req.body.fatInGrams,
+      user: mongoose.Types.ObjectId(req.headers.user),
     });
     const goal = await newGoal.save();
     res.json(goal);

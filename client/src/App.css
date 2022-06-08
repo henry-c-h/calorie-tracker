@@ -401,8 +401,8 @@ th {
   width: 100%;
   background-color: rgba(255, 255, 255, 0.1);
   display: flex;
-  gap: 80px;
-  padding: 20px;
+  gap: 60px;
+  padding: 30px;
   border-radius: 10px;
 }
 
@@ -612,11 +612,6 @@ input[type='range']::-webkit-slider-thumb {
   border-radius: 10px;
 }
 
-.goal-form button:disabled {
-  background-color: #8b8c93;
-  cursor: not-allowed;
-}
-
 .goal-form button:hover:enabled {
   background-color: #4d858d;
   cursor: pointer;
@@ -721,7 +716,7 @@ input[type='range']::-webkit-slider-thumb {
 button:disabled,
 button:disabled:hover {
   cursor: not-allowed;
-  background-color: #cccccc;
+  background-color: #939393;
 }
 
 .photo-credit {

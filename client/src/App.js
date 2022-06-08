@@ -1,33 +1,82 @@
 import './App.css';
 import React from 'react';
 import Navbar from './components/Navbar';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Diary from './components/Diary';
 import Goal from './components/Goal';
 import Login from './components/Login';
 import Register from './components/Register';
-import { fetchGoalsAsync } from './features/goalSlice';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUserAsync, selectUser } from './features/userSlice';
+import { fetchGoalsAsync } from './features/goalSlice';
 
 function App() {
   const dispatch = useDispatch();
+  const user = useSelector(selectUser);
 
   useEffect(() => {
-    dispatch(fetchGoalsAsync());
+    dispatch(fetchUserAsync());
   }, [dispatch]);
 
+  useEffect(() => {
+    dispatch(fetchGoalsAsync(user));
+  }, [dispatch, user]);
+
   return (
-    <div>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/" element={<Navbar />}>
-          <Route index element={<Diary />} />
-          <Route path="my-goals" element={<Goal />} />
-        </Route>
-      </Routes>
-    </div>
+    <Routes>
+      <Route
+        path="/login"
+        element={
+          user === false ? (
+            <Login />
+          ) : user === null ? null : (
+            <Navigate to="/" />
+          )
+        }
+      />
+      <Route
+        path="/register"
+        element={
+          user === false ? (
+            <Register />
+          ) : user === null ? null : (
+            <Navigate to="/" />
+          )
+        }
+      />
+      <Route
+        path="/"
+        element={
+          user === false ? (
+            <Navigate to="/login" />
+          ) : user === null ? null : (
+            <Navbar />
+          )
+        }
+      >
+        <Route
+          index
+          element={
+            user === false ? (
+              <Navigate to="/login" />
+            ) : user === null ? null : (
+              <Diary />
+            )
+          }
+        />
+        <Route
+          path="my-goals"
+          element={
+            user === false ? (
+              <Navigate to="/login" />
+            ) : user === null ? null : (
+              <Goal />
+            )
+          }
+        />
+      </Route>
+    </Routes>
   );
 }
 

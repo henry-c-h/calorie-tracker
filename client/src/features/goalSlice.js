@@ -17,21 +17,27 @@ const initialState = {
 
 export const fetchGoalsAsync = createAsyncThunk(
   'goals/fetchGoals',
-  async () => {
-    const response = await fetch('/api/goal');
+  async (user) => {
+    const response = await fetch('/api/goal', {
+      headers: {
+        'Content-Type': 'application/json',
+        user: user,
+      },
+    });
     const data = await response.json();
-    if (data.length === 0) {
+    if (!data) {
       const defaultGoal = await fetch('/api/goal', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          user: user,
         },
         body: JSON.stringify(initialState.goal),
       });
       const data = defaultGoal.json();
       return data;
     }
-    return data[0];
+    return data;
   }
 );
 

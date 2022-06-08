@@ -1,11 +1,15 @@
 const router = require('express').Router();
 const Food = require('../models/Food');
 const fetch = require('node-fetch');
+const mongoose = require('mongoose');
 
 // get food items from db
 router.get('/', async (req, res) => {
   try {
-    const allFoodItems = await Food.find();
+    const user = req.headers.user;
+    const allFoodItems = await Food.find({
+      user: mongoose.Types.ObjectId(user),
+    });
     res.json(allFoodItems);
   } catch (err) {
     res.json(err);
@@ -77,6 +81,7 @@ router.post('/', async (req, res) => {
       protein: req.body.protein,
       carbs: req.body.carbs,
       fat: req.body.fat,
+      user: mongoose.Types.ObjectId(req.body.user),
     });
     const newFoodItem = await foodItem.save();
     res.json(newFoodItem);

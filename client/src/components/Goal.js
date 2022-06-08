@@ -8,8 +8,10 @@ import {
   selectGoalFetchStatus,
 } from '../features/goalSlice';
 import { convertRatioToGrams } from '../utils';
+import { selectUser } from '../features/userSlice';
 
 const Goal = () => {
+  const user = useSelector(selectUser);
   const goals = useSelector(selectGoals);
   const goalUpdateStatus = useSelector(selectGoalUpdateStatus);
   const goalFetchStatus = useSelector(selectGoalFetchStatus);
@@ -50,7 +52,14 @@ const Goal = () => {
   function handleSubmit(e) {
     e.preventDefault();
     dispatch(
-      updateGoalsAsync({ id: goals._id, calorieGoal, protein, carbs, fat })
+      updateGoalsAsync({
+        id: goals._id,
+        calorieGoal,
+        protein,
+        carbs,
+        fat,
+        user,
+      })
     );
   }
 
