@@ -16,11 +16,7 @@ function App() {
   const user = useSelector(selectUser);
 
   useEffect(() => {
-    dispatch(fetchUserAsync());
-  }, [dispatch]);
-
-  useEffect(() => {
-    dispatch(fetchGoalsAsync(user));
+    dispatch(fetchUserAsync()).then(() => dispatch(fetchGoalsAsync(user)));
   }, [dispatch, user]);
 
   return (
