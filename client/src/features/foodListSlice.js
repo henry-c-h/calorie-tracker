@@ -124,7 +124,7 @@ export const foodListSlice = createSlice({
       })
       .addCase(fetchFoodListAsync.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.items = state.items.concat(action.payload);
+        state.items = action.payload;
       })
       .addCase(fetchFoodListAsync.rejected, (state, action) => {
         state.status = 'failed';
