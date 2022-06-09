@@ -15,6 +15,13 @@ const ProgressCircle = (props) => {
     <div className="progress-circle">
       <svg width={svgWidth} height={svgWidth}>
         <circle
+          className="progress-circle-background"
+          cx={svgWidth / 2}
+          cy={svgWidth / 2}
+          r={radius}
+          strokeWidth={strokeWidth}
+        />
+        <circle
           className="progress-circle-foreground"
           cx={svgWidth / 2}
           cy={svgWidth / 2}
@@ -23,13 +30,6 @@ const ProgressCircle = (props) => {
           strokeWidth={strokeWidth}
           strokeDasharray={`${circumference}, ${circumference}`}
           strokeDashoffset={`${circumference - consumed()}`}
-        />
-        <circle
-          className="progress-circle-background"
-          cx={svgWidth / 2}
-          cy={svgWidth / 2}
-          r={radius}
-          strokeWidth={strokeWidth}
         />
       </svg>
       <p className="progress-circle-text">{props.progressCircleText}</p>
