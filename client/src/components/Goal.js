@@ -2,14 +2,17 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   updateGoalsAsync,
+  fetchGoalsAsync,
   resetGoalsAsync,
   selectGoals,
   selectGoalUpdateStatus,
   selectGoalFetchStatus,
 } from '../features/goalSlice';
+import { selectUser } from '../features/userSlice';
 import { convertRatioToGrams } from '../utils';
 
 const Goal = () => {
+  const user = useSelector(selectUser);
   const goals = useSelector(selectGoals);
   const goalUpdateStatus = useSelector(selectGoalUpdateStatus);
   const goalFetchStatus = useSelector(selectGoalFetchStatus);
@@ -23,6 +26,10 @@ const Goal = () => {
   const [isValidRatio, setIsValidRatio] = useState(true);
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchGoalsAsync(user));
+  }, [dispatch, user]);
 
   useEffect(() => {
     if (goalFetchStatus === 'success') {
