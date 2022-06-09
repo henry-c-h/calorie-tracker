@@ -4,11 +4,7 @@ import Summary from './Summary';
 import Meal from './Meal';
 import DateBar from './DateBar';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  selectFoodList,
-  selectFoodListStatus,
-  fetchFoodListAsync,
-} from '../features/foodListSlice';
+import { selectFoodList, fetchFoodListAsync } from '../features/foodListSlice';
 import { selectUser } from '../features/userSlice';
 import { fetchGoalsAsync } from '../features/goalSlice';
 
@@ -21,13 +17,10 @@ const Diary = () => {
     (food) =>
       food.dateConsumed.slice(0, 10) === currentDate.toISO().slice(0, 10)
   );
-  const foodListStatus = useSelector(selectFoodListStatus);
 
   useEffect(() => {
-    if (foodListStatus === 'idle') {
-      dispatch(fetchFoodListAsync(user));
-    }
-  }, [foodListStatus, dispatch, user]);
+    dispatch(fetchFoodListAsync(user));
+  }, [dispatch, user]);
 
   useEffect(() => {
     dispatch(fetchGoalsAsync(user));
