@@ -35,7 +35,7 @@ router.put('/:goalId', async (req, res) => {
   try {
     const updatedGoal = await Goal.findOneAndUpdate(
       {
-        _id: req.params.goalId,
+        id: req.params.goalId,
       },
       { $set: req.body },
       { new: true }
