@@ -10,6 +10,7 @@ import {
   fetchFoodListAsync,
 } from '../features/foodListSlice';
 import { selectUser } from '../features/userSlice';
+import { fetchGoalsAsync } from '../features/goalSlice';
 
 const Diary = () => {
   const today = DateTime.now();
@@ -27,6 +28,10 @@ const Diary = () => {
       dispatch(fetchFoodListAsync(user));
     }
   }, [foodListStatus, dispatch, user]);
+
+  useEffect(() => {
+    dispatch(fetchGoalsAsync(user));
+  }, [dispatch, user]);
 
   return (
     <>
