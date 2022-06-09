@@ -2,14 +2,17 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   updateGoalsAsync,
+  fetchGoalsAsync,
   resetGoalsAsync,
   selectGoals,
   selectGoalUpdateStatus,
   selectGoalFetchStatus,
 } from '../features/goalSlice';
+import { selectUser } from '../features/userSlice';
 import { convertRatioToGrams } from '../utils';
 
 const Goal = () => {
+  const user = useSelector(selectUser);
   const goals = useSelector(selectGoals);
   const goalUpdateStatus = useSelector(selectGoalUpdateStatus);
   const goalFetchStatus = useSelector(selectGoalFetchStatus);
@@ -25,15 +28,15 @@ const Goal = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (goalFetchStatus === 'success') {
+    dispatch(fetchGoalsAsync(user)).then((action) => {
       setMacros({
-        calorieGoal: goals.calorieGoal,
-        protein: goals.protein,
-        carbs: goals.carbs,
-        fat: goals.fat,
+        calorieGoal: action.payload.calorieGoal,
+        protein: action.payload.protein,
+        carbs: action.payload.carbs,
+        fat: action.payload.fat,
       });
-    }
-  }, [goalFetchStatus, goals]);
+    });
+  }, [dispatch, user]);
 
   useEffect(() => {
     if (macros.protein && macros.carbs && macros.fat)
@@ -85,7 +88,7 @@ const Goal = () => {
                 onChange={(e) =>
                   setMacros((prev) => ({
                     ...prev,
-                    calorieGoal: e.target.value,
+                    calorieGoal: parseInt(e.target.value),
                   }))
                 }
                 step={100}
