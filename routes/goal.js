@@ -40,7 +40,6 @@ router.put('/:goalId', async (req, res) => {
       { $set: req.body },
       { new: true }
     );
-    console.log(updatedGoal);
     res.json(updatedGoal);
   } catch (err) {
     res.json(err);

@@ -66,22 +66,6 @@ export const updateGoalsAsync = createAsyncThunk(
   }
 );
 
-export const resetGoalsAsync = createAsyncThunk(
-  'goals/resetGoals',
-  async (goalId) => {
-    const response = await fetch(`/api/goal/${goalId}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(initialState.goal),
-    });
-    if (response.ok) {
-      return initialState.goal;
-    }
-  }
-);
-
 export const goalsSlice = createSlice({
   name: 'goals',
   initialState: initialState,
@@ -99,9 +83,6 @@ export const goalsSlice = createSlice({
       })
       .addCase(updateGoalsAsync.fulfilled, (state, action) => {
         state.updateStatus = 'success';
-        state.goal = action.payload;
-      })
-      .addCase(resetGoalsAsync.fulfilled, (state, action) => {
         state.goal = action.payload;
       });
   },
