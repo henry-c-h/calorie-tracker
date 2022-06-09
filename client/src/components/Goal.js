@@ -28,19 +28,26 @@ const Goal = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchGoalsAsync(user));
+    dispatch(fetchGoalsAsync(user)).then((action) => {
+      setMacros({
+        calorieGoal: action.payload.calorieGoal,
+        protein: action.payload.protein,
+        carbs: action.payload.carbs,
+        fat: action.payload.fat,
+      });
+    });
   }, [dispatch, user]);
 
-  useEffect(() => {
-    if (goalFetchStatus === 'success') {
-      setMacros({
-        calorieGoal: goals.calorieGoal,
-        protein: goals.protein,
-        carbs: goals.carbs,
-        fat: goals.fat,
-      });
-    }
-  }, [goalFetchStatus, goals]);
+  // useEffect(() => {
+  //   if (goalFetchStatus === 'success') {
+  //     setMacros({
+  //       calorieGoal: goals.calorieGoal,
+  //       protein: goals.protein,
+  //       carbs: goals.carbs,
+  //       fat: goals.fat,
+  //     });
+  //   }
+  // }, [goalFetchStatus, goals]);
 
   useEffect(() => {
     if (macros.protein && macros.carbs && macros.fat)
@@ -92,7 +99,7 @@ const Goal = () => {
                 onChange={(e) =>
                   setMacros((prev) => ({
                     ...prev,
-                    calorieGoal: e.target.value,
+                    calorieGoal: parseInt(e.target.value),
                   }))
                 }
                 step={100}
