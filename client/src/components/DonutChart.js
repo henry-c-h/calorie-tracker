@@ -8,7 +8,7 @@ const DonutChart = (props) => {
     datasets: [
       {
         data: props.dataList,
-        backgroundColor: ['#749296', '#936F61', '#E4B538'],
+        backgroundColor: ['#63758E', '#D86921', '#E4B538'],
         borderWidth: 0,
       },
     ],

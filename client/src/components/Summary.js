@@ -41,7 +41,7 @@ const Summary = (props) => {
           <ProgressCircle
             consumedRatio={consumedProteinRatio}
             progressCircleText={`${consumedProtein}g / ${goals.proteinInGrams}g consumed`}
-            strokeColor="#749296"
+            strokeColor="#63758E"
           />
           <p>protein 🍳</p>
         </div>
@@ -49,7 +49,7 @@ const Summary = (props) => {
           <ProgressCircle
             consumedRatio={consumedCarbsRatio}
             progressCircleText={`${consumedCarbs}g / ${goals.carbsInGrams}g consumed`}
-            strokeColor="#936F61"
+            strokeColor="#D86921"
           />
           <p>carbohydrates 🍞</p>
         </div>

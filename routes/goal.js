@@ -33,8 +33,6 @@ router.post('/', async (req, res) => {
 
 router.put('/:goalId', async (req, res) => {
   try {
-    console.log(req.params.goalId);
-    console.log(req.body);
     const updatedGoal = await Goal.findOneAndUpdate(
       {
         _id: mongoose.Types.ObjectId(req.params.goalId),

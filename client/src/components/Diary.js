@@ -34,10 +34,26 @@ const Diary = () => {
         mealType="breakfast"
         titleText="Breakfast 🥐"
         currentDate={currentDate}
+        backgroundImage="./assets/breakfast.jpg"
       />
-      <Meal mealType="lunch" titleText="Lunch 🍱" currentDate={currentDate} />
-      <Meal mealType="dinner" titleText="Dinner 🍛" currentDate={currentDate} />
-      <Meal mealType="snacks" titleText="Snacks 🍩" currentDate={currentDate} />
+      <Meal
+        mealType="lunch"
+        titleText="Lunch 🍱"
+        currentDate={currentDate}
+        backgroundImage="./assets/lunch.jpg"
+      />
+      <Meal
+        mealType="dinner"
+        titleText="Dinner 🍛"
+        currentDate={currentDate}
+        backgroundImage="./assets/dinner.jpg"
+      />
+      <Meal
+        mealType="snacks"
+        titleText="Snacks 🍩"
+        currentDate={currentDate}
+        backgroundImage="./assets/snacks.jpg"
+      />
     </>
   );
 };

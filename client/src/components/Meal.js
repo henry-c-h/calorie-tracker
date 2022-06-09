@@ -102,7 +102,12 @@ const Meal = (props) => {
 
   return (
     <div className="meal-container">
-      <div className="meal-card">
+      <div
+        className="meal-card"
+        style={{
+          backgroundImage: `url(${props.backgroundImage})`,
+        }}
+      >
         <p className="meal-title">
           {props.titleText}
           <span className="expand-icon" onClick={handleExpandIconClick}>

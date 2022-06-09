@@ -38,17 +38,6 @@ const Goal = () => {
     });
   }, [dispatch, user]);
 
-  // useEffect(() => {
-  //   if (goalFetchStatus === 'success') {
-  //     setMacros({
-  //       calorieGoal: goals.calorieGoal,
-  //       protein: goals.protein,
-  //       carbs: goals.carbs,
-  //       fat: goals.fat,
-  //     });
-  //   }
-  // }, [goalFetchStatus, goals]);
-
   useEffect(() => {
     if (macros.protein && macros.carbs && macros.fat)
       setIsValidRatio(macros.protein + macros.carbs + macros.fat === 100);
