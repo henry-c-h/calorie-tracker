@@ -69,9 +69,6 @@ const Goal = () => {
     dispatch(resetGoalsAsync(goals._id));
   }
 
-  console.log(macros);
-  console.log(goalFetchStatus);
-
   return (
     <div className="goal-container">
       <div className="goal">

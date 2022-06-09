@@ -9,16 +9,13 @@ import Register from './components/Register';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUserAsync, selectUser } from './features/userSlice';
-import { fetchGoalsAsync } from './features/goalSlice';
 
 function App() {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
 
   useEffect(() => {
-    dispatch(fetchUserAsync()).then((res) => {
-      if (res.payload) dispatch(fetchGoalsAsync(res.payload));
-    });
+    dispatch(fetchUserAsync());
   }, [dispatch]);
 
   return (
