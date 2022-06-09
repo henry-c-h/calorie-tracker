@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   updateGoalsAsync,
   fetchGoalsAsync,
-  resetGoalsAsync,
   selectGoals,
   selectGoalUpdateStatus,
   selectGoalFetchStatus,
@@ -66,10 +65,6 @@ const Goal = () => {
         setTimeout(() => setDisplayMessage(false), 3000);
       }
     });
-  }
-
-  function handleResetClick() {
-    dispatch(resetGoalsAsync(goals._id));
   }
 
   return (
@@ -170,9 +165,6 @@ const Goal = () => {
                 }
               >
                 Update goals
-              </button>
-              <button type="button" onClick={handleResetClick}>
-                Reset goals
               </button>
             </div>
           </form>
