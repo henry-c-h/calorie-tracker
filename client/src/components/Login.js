@@ -35,14 +35,11 @@ const Login = () => {
           username,
           password,
         };
-        const response = await fetch(
-          'https://calorie-logging-app.herokuapp.com/api/auth/login',
-          {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(loginData),
-          }
-        );
+        const response = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(loginData),
+        });
         if (response.status === 401) {
           const data = await response.json();
           setErrorMessage(data.errorMessage);
@@ -72,6 +69,11 @@ const Login = () => {
             <p className="auth-message">Please fill in both fields</p>
           ) : null}
           {errorMessage ? <p className="auth-message">{errorMessage}</p> : null}
+          <p className="auth-message">
+            Please feel free to test with:
+            <p>Username: admin</p>
+            <p>Password: admin123</p>
+          </p>
         </div>
         <div className="auth-form-row">
           <label htmlFor="username">Username</label>
