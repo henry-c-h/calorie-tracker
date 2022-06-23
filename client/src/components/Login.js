@@ -69,6 +69,11 @@ const Login = () => {
             <p className="auth-message">Please fill in both fields</p>
           ) : null}
           {errorMessage ? <p className="auth-message">{errorMessage}</p> : null}
+          <p className="auth-message">
+            Please feel free to test with:
+            <p>Username: admin</p>
+            <p>Password: admin123</p>
+          </p>
         </div>
         <div className="auth-form-row">
           <label htmlFor="username">Username</label>
